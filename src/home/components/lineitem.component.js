@@ -15,7 +15,9 @@ class LineItemComponent extends React.Component{
                         <DetailComponent 
                             selectedOrder={this.props.selectedOrder || (this.props.orders && this.props.orders[0])}
                             RemoveLineItems={this.props.RemoveLineItems}
-                            EditLineItems={this.props.EditLineItems}>
+                            EditLineItems={this.props.EditLineItems}
+                            UpdateLineUnits={this.props.UpdateLineUnits}
+                            SaveLineUnits={this.props.SaveLineUnits}>
                         </DetailComponent>}
                     {this.props.lineItemMode === 'showAdd' &&
                         <AddComponent 

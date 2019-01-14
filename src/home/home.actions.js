@@ -112,7 +112,17 @@ export const UnSelectLineItems = dispatch => {
 export const EditLineItems = dispatch => {
   return (item) => {
     dispatch ({
-      type:"EDIT_LINE_ITEM",
+      type:"EDIT_LINE_ITEMS",
+      item : item
+    })
+  }
+}
+
+export const UpdateLineUnits = dispatch => {
+  return (unit, item) => {
+    dispatch ({
+      type:"UPDATE_LINE_UNITS",
+      unit : unit,
       item : item
     })
   }
@@ -121,6 +131,39 @@ export const EditLineItems = dispatch => {
 export const SaveLineItems = dispatch => {
   return (selectedOrder, selectedLines) => {
     selectedOrder.lineItems.concat(selectedLines);
+    dispatch ({
+      type:"UPDATE_ORDER"
+    })
+    fetch('https://private-5068a4-react21.apiary-mock.com/userlist/updateorder', { 
+      method: 'POST',
+      data: selectedOrder
+    })
+    .then(function(response) {
+      return response.json()
+    })
+    .then(function(response) {
+      dispatch ({
+        type:"UPDATE_ORDER_SUCCESS",
+        success : response
+      })
+    })
+    .then(function(myJson) {
+      dispatch ({
+        type:"UPDATE_ORDER_FAILURE",
+        error : "Error Message"
+      })
+    });
+  }
+}
+
+export const SaveLineUnits = dispatch => {
+  return (selectedOrder, item) => {
+    selectedOrder.lineItems = selectedOrder.lineItems.map(line => {
+      if(line.productid === item.productid){
+        line = item
+      }
+      return line;
+    });
     dispatch ({
       type:"UPDATE_ORDER"
     })

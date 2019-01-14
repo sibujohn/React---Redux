@@ -3,10 +3,19 @@ import React from 'react'
 class DetailComponent extends React.Component{ 
   removeLineItem = (event, item) =>{
     event.stopPropagation();
+    this.props.RemoveLineItems(this.props.selectedOrder, item);
   }
   editLineItem = (event, item) =>{
     event.stopPropagation();
-    // this.props.EditLineItems(item)
+    this.props.EditLineItems(item)
+  }
+  editItemUnits = (event, item) =>{
+    event.stopPropagation();
+    this.props.UpdateLineUnits(event.target.value, item)
+  }
+  saveLineUnits = (event, item) =>{
+    event.stopPropagation();
+    this.props.SaveLineUnits(this.props.selectedOrder, item);
   }
   render(){
     return (
@@ -17,7 +26,8 @@ class DetailComponent extends React.Component{
               <div>
                 <div>Name</div>
                 <button onClick={e => this.removeLineItem(e, item)}>Delete</button>
-                <button onClick={e => this.editLineItem(e, item)}>Edit</button>
+                {!item.editMode && <button onClick={e => this.editLineItem(e, item)}>Edit</button>}
+                {item.editMode && <button onClick={e => this.saveLineUnits(e, item)}>Save</button>}
               </div>
               <div>
                 <div>UOM</div>
@@ -25,7 +35,9 @@ class DetailComponent extends React.Component{
                 <div>Cost</div>
                 <div>{item.cost}</div>
                 <div>Units</div>
-                {item.editMode && <input value={item.unit}/>}
+                {item.editMode && <input value={item.unit}
+                  value={item.unit}
+                  onChange={(e)=>this.editItemUnits(e, item)}/>}
                 {!item.editMode && <div>{item.unit}</div>}
                 <div>Description</div>
                 <div>{item.desc}</div>

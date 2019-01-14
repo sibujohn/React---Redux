@@ -48,13 +48,31 @@ const ComponentReducer = (state = { }, action) => {
         return {
           ...state, selectedOrder:action.selectedOrder
         }
-      case "EDIT_LINE_ITEM":
+      case "EDIT_LINE_ITEMS":
+        let editLineItems = state.selectedOrder.lineItems.map(item => {
+          if(item.productid === action.item.productid){
+            item.editMode = true;
+          }
+          return item;
+        })
         return {
-          ...state, selectedOrder : state.selectedOrder.lineItems.map(item => {
-            if(item.productid === action.item.productid){
-              item.editMode = true;
-            }
-          })
+          ...state,
+          selectedOrder: {
+            ...state.selectedOrder, lineItems: editLineItems
+          }
+        }      
+      case "UPDATE_LINE_UNITS":
+        let updateLineItems = state.selectedOrder.lineItems.map(item => {
+          if(item.productid === action.item.productid){
+            item.unit = action.unit;
+          }
+          return item;
+        })
+        return {
+          ...state,
+          selectedOrder: {
+            ...state.selectedOrder, lineItems: updateLineItems
+          }
         }
       case "REMOVE_LINE_ITEMS":
         return {

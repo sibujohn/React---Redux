@@ -12,7 +12,9 @@ import {
   UnSelectLineItems,
   SaveLineItems,
   RemoveLineItems,
-  EditLineItems } from './home.actions'
+  EditLineItems,
+  UpdateLineUnits,
+  SaveLineUnits } from './home.actions'
 
 import UserComponent from './components/user.component'
 import SearchComponent from './components/search.component'
@@ -68,6 +70,8 @@ class HomeComponent extends React.Component{
               searchLineItems={this.props.SearchLineItems}
               RemoveLineItems={this.props.RemoveLineItems}
               EditLineItems={this.props.EditLineItems}
+              UpdateLineUnits={this.props.UpdateLineUnits}
+              SaveLineUnits={this.props.SaveLineUnits}
               
               selectedLines = {this.props.selectedLines}
               SelectLineItems = {this.props.SelectLineItems}
@@ -90,11 +94,13 @@ const mapDispatchToProps = dispatch => ({
   SearchOrder : SearchOrder(dispatch),
   ToggleLineItemMode : ToggleLineItemMode(dispatch),
   SearchLineItems : SearchLineItems(dispatch),
-  SelectLineItems : SelectLineItems(dispatch),
-  UnSelectLineItems : UnSelectLineItems(dispatch),
   SaveLineItems : SaveLineItems(dispatch),
   RemoveLineItems : RemoveLineItems(dispatch),
-  EditLineItems : EditLineItems(dispatch)
+  EditLineItems : EditLineItems(dispatch),
+  SelectLineItems : SelectLineItems(dispatch),
+  UnSelectLineItems : UnSelectLineItems(dispatch),
+  UpdateLineUnits : UpdateLineUnits(dispatch),
+  SaveLineUnits : SaveLineUnits(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeComponent)
