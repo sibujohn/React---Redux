@@ -1,6 +1,13 @@
 import React from 'react'
 
-class DetailComponent extends React.Component{
+class DetailComponent extends React.Component{ 
+  removeLineItem = (event, item) =>{
+    event.stopPropagation();
+  }
+  editLineItem = (event, item) =>{
+    event.stopPropagation();
+    // this.props.EditLineItems(item)
+  }
   render(){
     return (
       <div>
@@ -9,8 +16,8 @@ class DetailComponent extends React.Component{
             <div key={index}>
               <div>
                 <div>Name</div>
-                <button>Delete</button>
-                <button>Edit</button>
+                <button onClick={e => this.removeLineItem(e, item)}>Delete</button>
+                <button onClick={e => this.editLineItem(e, item)}>Edit</button>
               </div>
               <div>
                 <div>UOM</div>
@@ -18,7 +25,8 @@ class DetailComponent extends React.Component{
                 <div>Cost</div>
                 <div>{item.cost}</div>
                 <div>Units</div>
-                <div>{item.unit}</div>
+                {item.editMode && <input value={item.unit}/>}
+                {!item.editMode && <div>{item.unit}</div>}
                 <div>Description</div>
                 <div>{item.desc}</div>
               </div>

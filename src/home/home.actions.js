@@ -6,7 +6,7 @@ export const HomeAction = payload => ({
 })
 
 export const RequestOrders = dispatch => {
-  return name => {
+  return () => {
     dispatch ({
       type:"FETCH_ORDERS"
     })
@@ -30,7 +30,7 @@ export const RequestOrders = dispatch => {
 }
 
 export const RequestLineItems = dispatch => {
-  return name => {
+  return () => {
     dispatch ({
       type:"FETCH_LINE_ITEMS"
     })
@@ -90,39 +90,88 @@ export const SearchLineItems = dispatch => {
 }
 
 export const SelectLineItems = dispatch => {
-  return (item) => {
+  return (selectedLines, item) => {
     dispatch ({
       type:"SELECT_LINE_ITEMS",
+      selectedLines: selectedLines,
       item : item
     })
   }
 }
 
 export const UnSelectLineItems = dispatch => {
-  return (item) => {
+  return (selectedLines, item) => {
     dispatch ({
       type:"UNSELECT_LINE_ITEMS",
+      selectedLines: selectedLines,
       item : item
     })
   }
 }
 
-export const AddLineItems = dispatch => {
-  return (order, item) => {
+export const EditLineItems = dispatch => {
+  return (item) => {
     dispatch ({
-      type:"ADD_LINE_ITEMS",
-      order : order,
+      type:"EDIT_LINE_ITEM",
       item : item
     })
+  }
+}
+
+export const SaveLineItems = dispatch => {
+  return (selectedOrder, selectedLines) => {
+    selectedOrder.lineItems.concat(selectedLines);
+    dispatch ({
+      type:"UPDATE_ORDER"
+    })
+    fetch('https://private-5068a4-react21.apiary-mock.com/userlist/updateorder', { 
+      method: 'POST',
+      data: selectedOrder
+    })
+    .then(function(response) {
+      return response.json()
+    })
+    .then(function(response) {
+      dispatch ({
+        type:"UPDATE_ORDER_SUCCESS",
+        success : response
+      })
+    })
+    .then(function(myJson) {
+      dispatch ({
+        type:"UPDATE_ORDER_FAILURE",
+        error : "Error Message"
+      })
+    });
   }
 }
 
 export const RemoveLineItems = dispatch => {
-  return (order, item) => {
+  return (selectedOrder, item) => {
+    selectedOrder.lineItems = selectedOrder.lineItems.filter(line => {
+      return line.productid !== item.productid
+    });
     dispatch ({
-      type:"REMOVE_LINE_ITEMS",
-      order : order,
-      item : item
+      type:"UPDATE_ORDER"
     })
+    fetch('https://private-5068a4-react21.apiary-mock.com/userlist/updateorder', { 
+      method: 'POST',
+      data: selectedOrder
+    })
+    .then(function(response) {
+      return response.json()
+    })
+    .then(function(response) {
+      dispatch ({
+        type:"UPDATE_ORDER_SUCCESS",
+        success : response
+      })
+    })
+    .then(function(myJson) {
+      dispatch ({
+        type:"UPDATE_ORDER_FAILURE",
+        error : "Error Message"
+      })
+    });
   }
 }

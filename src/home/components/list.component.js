@@ -19,7 +19,7 @@ class ListComponent extends React.Component{
           <tbody>
             {
               this.props.orders && this.props.orders.map((order, index) => 
-                <tr key={index} onClick={() => this.props.clickHandler(order)}>
+                <tr key={index} onClick={() => this.props.selectOrder(order)}>
                   <td>{order.ordernumber}</td>
                   <td>{order.date}</td>
                   <td>{order.zip}</td>

@@ -7,7 +7,12 @@ import {
   SelectOrder,
   SearchOrder,
   ToggleLineItemMode,
-  SearchLineItems } from './home.actions'
+  SearchLineItems,
+  SelectLineItems,
+  UnSelectLineItems,
+  SaveLineItems,
+  RemoveLineItems,
+  EditLineItems } from './home.actions'
 
 import UserComponent from './components/user.component'
 import SearchComponent from './components/search.component'
@@ -37,6 +42,12 @@ class HomeComponent extends React.Component{
     }
     return []
   }
+  toggleLineItemMode = (mode) =>{
+    this.props.ToggleLineItemMode(mode)
+    if(mode === 'showDetail'){
+      this.props.SaveLineItems(this.props.selectedOrder, this.props.selectedLines)
+    }
+  }
   render(){
     return (
       <div>
@@ -46,15 +57,21 @@ class HomeComponent extends React.Component{
         </div>
         <div>
           <div>
-            <ListComponent orders={this.getFilteredList()} clickHandler={this.props.SelectOrder}/>
+            <ListComponent orders={this.getFilteredList()} selectOrder={this.props.SelectOrder}/>
           </div>
           <div>
             <LineItemComponent 
               selectedOrder={this.props.selectedOrder || (this.props.orders && this.props.orders[0])}
               lineItems={this.getFilteredLineList()}
-              toggleLineItemMode={this.props.ToggleLineItemMode}
+              toggleLineItemMode={this.toggleLineItemMode}
               lineItemMode={this.props.lineItemMode || 'showDetail'} 
-              searchLineItems={this.props.SearchLineItems} />
+              searchLineItems={this.props.SearchLineItems}
+              RemoveLineItems={this.props.RemoveLineItems}
+              EditLineItems={this.props.EditLineItems}
+              
+              selectedLines = {this.props.selectedLines}
+              SelectLineItems = {this.props.SelectLineItems}
+              UnSelectLineItems = {this.props.UnSelectLineItems}/>
           </div>
         </div>
       </div>
@@ -72,7 +89,12 @@ const mapDispatchToProps = dispatch => ({
   SelectOrder : SelectOrder(dispatch),
   SearchOrder : SearchOrder(dispatch),
   ToggleLineItemMode : ToggleLineItemMode(dispatch),
-  SearchLineItems : SearchLineItems(dispatch)
+  SearchLineItems : SearchLineItems(dispatch),
+  SelectLineItems : SelectLineItems(dispatch),
+  UnSelectLineItems : UnSelectLineItems(dispatch),
+  SaveLineItems : SaveLineItems(dispatch),
+  RemoveLineItems : RemoveLineItems(dispatch),
+  EditLineItems : EditLineItems(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeComponent)

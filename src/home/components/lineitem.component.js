@@ -11,8 +11,20 @@ class LineItemComponent extends React.Component{
                 {this.props.lineItemMode === 'showDetail' && <button onClick={() => this.props.toggleLineItemMode('showAdd')}>Add</button>}
                 {this.props.lineItemMode === 'showAdd' && <button onClick={() => this.props.toggleLineItemMode('showDetail')}>Save</button>}
                 <div>
-                    {this.props.lineItemMode === 'showDetail' && <DetailComponent selectedOrder={this.props.selectedOrder || (this.props.orders && this.props.orders[0])}></DetailComponent>}
-                    {this.props.lineItemMode === 'showAdd' && <AddComponent lineItems={this.props.lineItems} searchLineItems={this.props.searchLineItems}>Save</AddComponent>}
+                    {this.props.lineItemMode === 'showDetail' &&
+                        <DetailComponent 
+                            selectedOrder={this.props.selectedOrder || (this.props.orders && this.props.orders[0])}
+                            RemoveLineItems={this.props.RemoveLineItems}
+                            EditLineItems={this.props.EditLineItems}>
+                        </DetailComponent>}
+                    {this.props.lineItemMode === 'showAdd' &&
+                        <AddComponent 
+                            lineItems={this.props.lineItems} 
+                            searchLineItems={this.props.searchLineItems}
+                            selectedLines = {this.props.selectedLines}
+                            SelectLineItems = {this.props.SelectLineItems}
+                            UnSelectLineItems = {this.props.UnSelectLineItems}>
+                        </AddComponent>}
                 </div>
             </div>
         )

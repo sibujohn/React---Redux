@@ -2,6 +2,11 @@ import { combineReducers } from 'redux'
 
 import { HomeAction } from './home.actions'
 
+function removeSelectedLines(selectedLines, item){
+  return selectedLines.filter(line => {
+    return line.id === item.id
+  })
+}
 const ComponentReducer = (state = { }, action) => {
     switch (action.type) {
       case HomeAction:
@@ -13,10 +18,10 @@ const ComponentReducer = (state = { }, action) => {
       case "FETCH_LINE_ITEMS_SUCCESS":
         return {
           ...state, lineItems:action.lineItems
-        }
+        }   
       case "SELECT_ORDER":
         return {
-          ...state, selectedOrder:action.order
+          ...state, selectedOrder:action.order, selectedLines:[]
         }
       case "SEARCH_ORDER":
         return {
@@ -29,22 +34,31 @@ const ComponentReducer = (state = { }, action) => {
       case "TOGGLE_LINE_ITEM_MODE":
         return {
           ...state, lineItemMode:action.lineItemMode
-        }
+        }   
       case "SELECT_LINE_ITEMS":
         return {
-          ...state, item:action.item
+          ...state,
+          selectedLines: [...state.selectedLines, action.item]
         }
       case "UNSELECT_LINE_ITEMS":
         return {
-          ...state, item:action.item
+          ...state, selectedLines : state.selectedLines.filter(item => item.productid !== action.item.productid)
         }
-      case "ADD_LINE_ITEMS":
+      case "SAVE_LINE_ITEMS":
         return {
-          ...state, order:action.order, item:action.item
+          ...state, selectedOrder:action.selectedOrder
+        }
+      case "EDIT_LINE_ITEM":
+        return {
+          ...state, selectedOrder : state.selectedOrder.lineItems.map(item => {
+            if(item.productid === action.item.productid){
+              item.editMode = true;
+            }
+          })
         }
       case "REMOVE_LINE_ITEMS":
         return {
-          ...state, order:action.order, item:action.item
+          ...state, selectedOrder:action.selectedOrder
         }
       default:
         return state
