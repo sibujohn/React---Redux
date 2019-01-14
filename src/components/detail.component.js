@@ -36,7 +36,6 @@ class DetailComponent extends React.Component{
                 <div>{item.cost}</div>
                 <div>Units</div>
                 {item.editMode && <input value={item.unit}
-                  value={item.unit}
                   onChange={(e)=>this.editItemUnits(e, item)}/>}
                 {!item.editMode && <div>{item.unit}</div>}
                 <div>Description</div>

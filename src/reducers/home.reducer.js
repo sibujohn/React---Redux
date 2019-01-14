@@ -1,12 +1,7 @@
 import { combineReducers } from 'redux'
 
-import { HomeAction } from './home.actions'
+import { HomeAction } from '../actions/home.actions'
 
-function removeSelectedLines(selectedLines, item){
-  return selectedLines.filter(line => {
-    return line.id === item.id
-  })
-}
 const ComponentReducer = (state = { }, action) => {
     switch (action.type) {
       case HomeAction:

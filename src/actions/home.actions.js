@@ -1,4 +1,4 @@
-import { HOME_ACTION } from './home.constants'
+import { HOME_ACTION } from '../constants/home.constants'
 
 export const HomeAction = payload => ({
   type: HOME_ACTION,

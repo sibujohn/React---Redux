@@ -14,12 +14,12 @@ import {
   RemoveLineItems,
   EditLineItems,
   UpdateLineUnits,
-  SaveLineUnits } from './home.actions'
+  SaveLineUnits } from '../actions/home.actions'
 
-import UserComponent from './components/user.component'
-import SearchComponent from './components/search.component'
-import ListComponent from './components/list.component'
-import LineItemComponent from './components/lineitem.component'
+import UserComponent from '../components/user.component'
+import SearchComponent from '../components/search.component'
+import ListComponent from '../components/list.component'
+import LineItemComponent from '../components/lineitem.component'
 
 class HomeComponent extends React.Component{
   componentWillMount(){

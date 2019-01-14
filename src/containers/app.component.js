@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import AppRoutes from './app.routes'
+import AppRoutes from '../routes/app.routes'
 
 
 class AppComponent extends Component {

@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
 import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import './app.component.css';
+import './assets/app.component.css';
 
 import React from 'react'
 import { render } from 'react-dom'
@@ -10,8 +10,8 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
-import AppComponent from './app.component'
-import AppStore from './app.store'
+import AppComponent from './containers/app.component'
+import AppStore from './store/app.store'
 
 const middleware = [ thunk ]
 if (process.env.NODE_ENV !== 'production') {
