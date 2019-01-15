@@ -4,7 +4,8 @@ const ComponentReducer = (state = { }, action) => {
     switch (action.type) {
       case "FETCH_ORDERS_SUCCESS":
         return {
-          ...state, orders:action.orders, 
+          ...state,
+          orders:action.orders, 
           selectedOrder:action.orders[0], 
           selectedLines:[]
 
@@ -12,10 +13,43 @@ const ComponentReducer = (state = { }, action) => {
       case "FETCH_LINE_ITEMS_SUCCESS":
         return {
           ...state, lineItems:action.lineItems
+        }
+      case "UPDATE_ORDER_SUCCESS":
+        let orders = state.orders;
+        let updatedOrder = state.selectedOrder;
+        let lines = state.lineItems.map(line => {
+          line.selected = false;
+          return line;
+        })
+        orders.map(item => {
+          if(item.ordernumber === updatedOrder.ordernumber){
+            item = updatedOrder
+          }
+          let orderLines = item.lineItems.map(i => {
+            i.editMode = false;
+            return i;
+          })
+          item.lineItems = orderLines;
+          return item;
+        })
+        return {
+          ...state,
+          orders:orders, 
+          selectedOrder:updatedOrder,
+          lineItems:lines,
+          selectedLines:[],
+          lineItemMode:'showDetail'
         }   
       case "SELECT_ORDER":
         return {
-          ...state, selectedOrder:action.order, selectedLines:[]
+          ...state,
+          selectedOrder:action.order,
+          selectedLines:[],
+          lineItems:state.lineItems.map(line => {
+            line.selected = false;
+            return line;
+          }),
+          lineItemMode:'showDetail'
         }
       case "SEARCH_ORDER":
         return {

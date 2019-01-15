@@ -27,7 +27,7 @@ class AddComponent extends React.Component{
   }
   render(){
     return (
-      <div>
+      <div className="full-height">
         <form className="search-box w-100" onSubmit={(e)=>this.triggerLineSearch(e)}>
             <div className="input-group input-group-sm">
                 <input type="text" className="form-control" placeholder="Search here..." value={this.state.searchLine} onChange={this.updateSearchLine}/>
@@ -39,7 +39,7 @@ class AddComponent extends React.Component{
             </div>
         </form>
         <div className="add-list-elements">
-          <ul className="list-group">
+          <ul className="list-group scroller">
             { this.props.lineItems && this.props.lineItems.map((item, index) =>
               <li className="list-group-item d-flex flex-row align-items-center" key={index} onClick={(e) => this.toggleSelectLine(e, item)}>
                 <div className="check-box" >

@@ -1,4 +1,4 @@
-import { HOME_ACTION } from '../actions/home.actions'
+import { Http_Get, Http_Post } from '../utils/app.apis'
 import { REQUEST_ORDER, REQUEST_LINE_ITEMS, UPDATE_ORDER } from '../constants/home.constants'
 
 export const RequestOrders = dispatch => {
@@ -6,7 +6,7 @@ export const RequestOrders = dispatch => {
     dispatch ({
       type:"FETCH_ORDERS"
     })
-    fetch(REQUEST_ORDER)
+    Http_Get(REQUEST_ORDER)
     .then(function(response) {
       return response.json()
     })
@@ -30,7 +30,7 @@ export const RequestLineItems = dispatch => {
     dispatch ({
       type:"FETCH_LINE_ITEMS"
     })
-    fetch(REQUEST_LINE_ITEMS)
+    Http_Get(REQUEST_LINE_ITEMS)
     .then(function(response) {
       return response.json()
     })
@@ -131,13 +131,7 @@ export const SaveLineItems = dispatch => {
     dispatch ({
       type:"UPDATE_ORDER"
     })
-    fetch(UPDATE_ORDER, {
-      method: "POST",
-      body: JSON.stringify(selectedOrder),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
+    Http_Post(UPDATE_ORDER, selectedOrder)
     .then(function(response) {
       return response.json()
     })
@@ -167,13 +161,7 @@ export const SaveLineUnits = dispatch => {
     dispatch ({
       type:"UPDATE_ORDER"
     })
-    fetch(UPDATE_ORDER, {
-      method: "POST",
-      body: JSON.stringify(selectedOrder),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
+    Http_Post(UPDATE_ORDER, selectedOrder)
     .then(function(response) {
       return response.json()
     })
@@ -200,13 +188,7 @@ export const RemoveLineItems = dispatch => {
     dispatch ({
       type:"UPDATE_ORDER"
     })
-    fetch(UPDATE_ORDER, {
-      method: "POST",
-      body: JSON.stringify(selectedOrder),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
+    Http_Post(UPDATE_ORDER, selectedOrder)
     .then(function(response) {
       return response.json()
     })

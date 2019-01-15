@@ -19,7 +19,7 @@ class DetailComponent extends React.Component{
   }
   render(){
     return (
-      <div>
+      <div className="scroller">
         { this.props.selectedOrder && this.props.selectedOrder.lineItems
           && this.props.selectedOrder.lineItems.map((item, index) =>
           <div className="card card-line-item mb-3" key={index}>
@@ -27,9 +27,11 @@ class DetailComponent extends React.Component{
                 <div className="card-title-box d-flex flex-row justify-content-between">
                     <label className="card-title">NAME</label>
                     <div className="actions-box">
-                        <span className="mr-3 icon-trash" onClick={e => this.removeLineItem(e, item)}>
-                            <i className="fas fa-trash"></i>
-                        </span>
+                        {!item.editMode &&
+                          <span className="mr-3 icon-trash" onClick={e => this.removeLineItem(e, item)}>
+                              <i className="fas fa-trash"></i>
+                          </span>
+                        }
                         {!item.editMode &&
                           <span className="ml-3 icon-edit" onClick={e => this.editLineItem(e, item)}>
                               <i className="fas fa-edit"></i>

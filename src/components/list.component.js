@@ -30,6 +30,11 @@ class ListComponent extends React.Component{
       <ReactTable
         data={this.props.orders}
         columns={columns}
+        style={{
+          height: "100%"
+        }}
+        showPagination={false}
+        className="-striped -highlight"
         getTrProps={(state, rowInfo) => {
           if (rowInfo && rowInfo.row) {
             return {

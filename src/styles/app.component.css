@@ -94,7 +94,7 @@ body {
 
 .App-Main-Content {
     width: 100%;
-    height: calc(100% - 73px) !important;
+    height: calc(100vh - 71px) !important;
     background: #f6f6f6;
 }
 .Content-Left {
@@ -105,9 +105,8 @@ body {
     width: 350px;
     min-width:250px;
     max-width: 350px;
+    margin-bottom: 2px;
     height: 100%;
-    overflow-x: hidden !important;
-    overflow-y: auto;
 }
 .Content-Right .header {
     min-height: 64px;
@@ -140,9 +139,11 @@ body {
 }
 .actions-box .icon-trash {
     color: #f44336;
+    cursor: pointer;
 }
 .actions-box .icon-edit {
     color: #7eb73d;
+    cursor: pointer;
 }
 
 .Content-Right .card-line-item {
@@ -208,6 +209,7 @@ body {
     padding: 20px 0px;
     margin-top:5px;
     font-size: 12px;
+    height: calc(100% - 51px);
 }
 .add-list-elements .list-group .list-group-item {
     border: 0;
@@ -216,7 +218,9 @@ body {
     padding:0;
     margin-top:2px;
 }
-
+.add-list-elements .list-group .list-group-item .check-box{
+    cursor: pointer;
+}
 .add-list-elements .list-group .list-group-item .check-box .fas{
     font-size: 16px;
     margin-left:5px;
@@ -249,5 +253,17 @@ body {
     height: 100%;
     margin-bottom: 0;
 }
+
+.full-height{
+    height: 100%;
+}
+.scroller{
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
     
+.Item-Area{
+    height: calc(100% - 64px);
+}
 
