@@ -1,11 +1,7 @@
 import { combineReducers } from 'redux'
 
-import { HomeAction } from '../actions/home.actions'
-
 const ComponentReducer = (state = { }, action) => {
     switch (action.type) {
-      case HomeAction:
-        return state
       case "FETCH_ORDERS_SUCCESS":
         return {
           ...state, orders:action.orders, 

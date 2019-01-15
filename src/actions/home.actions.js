@@ -1,16 +1,12 @@
-import { HOME_ACTION } from '../constants/home.constants'
-
-export const HomeAction = payload => ({
-  type: HOME_ACTION,
-  payload
-})
+import { HOME_ACTION } from '../actions/home.actions'
+import { REQUEST_ORDER, REQUEST_LINE_ITEMS, UPDATE_ORDER } from '../constants/home.constants'
 
 export const RequestOrders = dispatch => {
   return () => {
     dispatch ({
       type:"FETCH_ORDERS"
     })
-    fetch('https://private-5068a4-react21.apiary-mock.com/userlist/list')
+    fetch(REQUEST_ORDER)
     .then(function(response) {
       return response.json()
     })
@@ -34,7 +30,7 @@ export const RequestLineItems = dispatch => {
     dispatch ({
       type:"FETCH_LINE_ITEMS"
     })
-    fetch('https://private-5068a4-react21.apiary-mock.com/userlist/linelist')
+    fetch(REQUEST_LINE_ITEMS)
     .then(function(response) {
       return response.json()
     })
@@ -130,13 +126,17 @@ export const UpdateLineUnits = dispatch => {
 
 export const SaveLineItems = dispatch => {
   return (selectedOrder, selectedLines) => {
-    selectedOrder.lineItems.concat(selectedLines);
+    let lineItems = selectedOrder.lineItems.concat(selectedLines);
+    selectedOrder.lineItems = lineItems;
     dispatch ({
       type:"UPDATE_ORDER"
     })
-    fetch('https://private-5068a4-react21.apiary-mock.com/userlist/updateorder', { 
-      method: 'POST',
-      data: selectedOrder
+    fetch(UPDATE_ORDER, {
+      method: "POST",
+      body: JSON.stringify(selectedOrder),
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
     .then(function(response) {
       return response.json()
@@ -167,9 +167,12 @@ export const SaveLineUnits = dispatch => {
     dispatch ({
       type:"UPDATE_ORDER"
     })
-    fetch('https://private-5068a4-react21.apiary-mock.com/userlist/updateorder', { 
-      method: 'POST',
-      data: selectedOrder
+    fetch(UPDATE_ORDER, {
+      method: "POST",
+      body: JSON.stringify(selectedOrder),
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
     .then(function(response) {
       return response.json()
@@ -197,9 +200,12 @@ export const RemoveLineItems = dispatch => {
     dispatch ({
       type:"UPDATE_ORDER"
     })
-    fetch('https://private-5068a4-react21.apiary-mock.com/userlist/updateorder', { 
-      method: 'POST',
-      data: selectedOrder
+    fetch(UPDATE_ORDER, {
+      method: "POST",
+      body: JSON.stringify(selectedOrder),
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
     .then(function(response) {
       return response.json()
