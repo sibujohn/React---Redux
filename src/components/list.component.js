@@ -1,38 +1,51 @@
 import React from 'react'
+import ReactTable from "react-table";
+import 'react-table/react-table.css'
 
 class ListComponent extends React.Component{
   render(){
+    const columns = [{
+      Header: 'Order No:',
+      accessor: 'ordernumber'
+    },{
+      Header: 'Date',
+      accessor: 'date',
+    },{
+      Header: 'Zip',
+      accessor: 'zip'
+    },{
+      Header: 'State',
+      accessor: 'state'
+    },{
+      Header: 'Created By',
+      accessor: 'createdBy'
+    },{
+      Header: 'Picked',
+      accessor: 'picked'
+    },{
+      Header: 'Shipped',
+      accessor: 'shipped'
+    }];
     return (
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <td>Order No:</td>
-              <td>Date</td>
-              <td>Zip</td>
-              <td>State</td>
-              <td>Created By</td>
-              <td>Picked</td>
-              <td>Shipped</td>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              this.props.orders && this.props.orders.map((order, index) => 
-                <tr key={index} onClick={() => this.props.selectOrder(order)}>
-                  <td>{order.ordernumber}</td>
-                  <td>{order.date}</td>
-                  <td>{order.zip}</td>
-                  <td>{order.state}</td>
-                  <td>{order.createdBy}</td>
-                  <td>{order.picked}</td>
-                  <td>{order.shipped}</td>
-                </tr>
-              )
+      <ReactTable
+        data={this.props.orders}
+        columns={columns}
+        getTrProps={(state, rowInfo) => {
+          if (rowInfo && rowInfo.row) {
+            return {
+              onClick: (e) => {
+                this.props.selectOrder(rowInfo.original)
+              },
+              style: {
+                background: rowInfo.original.ordernumber === (this.props.selectedOrder && this.props.selectedOrder.ordernumber) ? '#00afec' : 'white',
+                color: rowInfo.original.ordernumber === (this.props.selectedOrder && this.props.selectedOrder.ordernumber) ? 'white' : 'black'
+              }
             }
-          </tbody>
-        </table>
-      </div>
+          }else{
+            return {}
+          }
+        }}
+      />
     )
   }
 }

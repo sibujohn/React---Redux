@@ -63,7 +63,7 @@ class HomeComponent extends React.Component{
         </div>
         <div className="App-Main-Content d-flex flex-row">
           <section className="Content-Left">
-            <ListComponent orders={this.getFilteredList()} selectOrder={this.props.SelectOrder}/>
+            <ListComponent orders={this.getFilteredList()} selectOrder={this.props.SelectOrder} selectedOrder={this.props.selectedOrder || (this.props.orders && this.props.orders[0])}/>
           </section>
           <section className="Content-Right d-flex flex-column border">
             <LineItemComponent 
