@@ -8,8 +8,11 @@ const ComponentReducer = (state = { }, action) => {
         return state
       case "FETCH_ORDERS_SUCCESS":
         return {
-          ...state, orders:action.orders
-        }      
+          ...state, orders:action.orders, 
+          selectedOrder:action.orders[0], 
+          selectedLines:[]
+
+        }
       case "FETCH_LINE_ITEMS_SUCCESS":
         return {
           ...state, lineItems:action.lineItems
@@ -31,13 +34,21 @@ const ComponentReducer = (state = { }, action) => {
           ...state, lineItemMode:action.lineItemMode
         }   
       case "SELECT_LINE_ITEMS":
+        let selectedItem = action.item;
+        selectedItem.selected = true;
         return {
           ...state,
-          selectedLines: [...state.selectedLines, action.item]
+          selectedLines: [...state.selectedLines, selectedItem]
         }
       case "UNSELECT_LINE_ITEMS":
+        let lineItems = state.lineItems.map(line => {
+          if(line.productid === action.item.productid){
+            line.selected = false;
+          }
+          return line;
+        })
         return {
-          ...state, selectedLines : state.selectedLines.filter(item => item.productid !== action.item.productid)
+          ...state, lineItems : lineItems, selectedLines : state.selectedLines.filter(item => item.productid !== action.item.productid)
         }
       case "SAVE_LINE_ITEMS":
         return {

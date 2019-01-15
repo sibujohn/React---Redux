@@ -29,7 +29,7 @@ class HomeComponent extends React.Component{
   getFilteredList = () => {
     if(this.props.orders){
       if(this.props.searchText){
-        return this.props.orders.filter(order => order.ordernumber === this.props.searchText)
+        return this.props.orders.filter(order => order.ordernumber.toUpperCase().startsWith(this.props.searchText.toUpperCase()))
       }
       return this.props.orders;
     }
@@ -38,7 +38,7 @@ class HomeComponent extends React.Component{
   getFilteredLineList = () => {
     if(this.props.lineItems){
       if(this.props.searchLine){
-        return this.props.lineItems.filter(line => line.desc === this.props.searchLine)
+        return this.props.lineItems.filter(line => line.uom.toUpperCase().startsWith(this.props.searchLine.toUpperCase()))
       }
       return this.props.lineItems;
     }
@@ -52,16 +52,20 @@ class HomeComponent extends React.Component{
   }
   render(){
     return (
-      <div>
-        <div>
-          <UserComponent/>
-          <SearchComponent searchText={this.props.searchText} searchOrder={this.props.SearchOrder}/>
-        </div>
-        <div>
-          <div>
-            <ListComponent orders={this.getFilteredList()} selectOrder={this.props.SelectOrder}/>
+      <div >
+        <div className="App-Header">
+          <div className="App-Main-Header">
+            <div className="d-flex App-Toolbar align-items-center justify-content-between">
+              <UserComponent/>
+              <SearchComponent searchText={this.props.searchText} searchOrder={this.props.SearchOrder}/>
+            </div>
           </div>
-          <div>
+        </div>
+        <div className="App-Main-Content d-flex flex-row">
+          <section className="Content-Left">
+            <ListComponent orders={this.getFilteredList()} selectOrder={this.props.SelectOrder}/>
+          </section>
+          <section className="Content-Right d-flex flex-column border">
             <LineItemComponent 
               selectedOrder={this.props.selectedOrder || (this.props.orders && this.props.orders[0])}
               lineItems={this.getFilteredLineList()}
@@ -76,7 +80,7 @@ class HomeComponent extends React.Component{
               selectedLines = {this.props.selectedLines}
               SelectLineItems = {this.props.SelectLineItems}
               UnSelectLineItems = {this.props.UnSelectLineItems}/>
-          </div>
+          </section>
         </div>
       </div>
     )

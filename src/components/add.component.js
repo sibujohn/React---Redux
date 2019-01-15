@@ -12,12 +12,13 @@ class AddComponent extends React.Component{
       searchLine:e.target.value
     })
   }
-  triggerLineSearch = () =>{
+  triggerLineSearch = (e) =>{
+    e.preventDefault();
     this.props.searchLineItems(this.state.searchLine)
   }
   toggleSelectLine = (event, item) =>{
-    event.stopPropagation();
-    if(event.target.checked){
+    event.stopPropagation()
+    if(!item.selected){
       this.props.SelectLineItems(this.props.selectedLines, item)
     }
     else{
@@ -27,21 +28,46 @@ class AddComponent extends React.Component{
   render(){
     return (
       <div>
-        <div>
-          <input value={this.state.searchLine} onChange={this.updateSearchLine}/>
-          <button onClick={this.triggerLineSearch}>Search</button>
-        </div>
-        { this.props.lineItems && this.props.lineItems.map((item, index) => 
-            <div key={index}>
-              <div>
-                <input type="checkbox" onClick={e => this.toggleSelectLine(e, item)}/>
-                <div>Item Name</div>
-                <div>{item.uom}</div>
-                <div>{item.desc}</div>
-              </div>
+        <form className="search-box w-100" onSubmit={(e)=>this.triggerLineSearch(e)}>
+            <div className="input-group input-group-sm">
+                <input type="text" className="form-control" placeholder="Search here..." value={this.state.searchLine} onChange={this.updateSearchLine}/>
+                <div className="input-group-prepend">
+                    <span className="input-group-text">
+                        <i className="fas fa-search"></i>
+                    </span>
+                </div>
             </div>
-          )
-        }
+        </form>
+        <div className="add-list-elements">
+          <ul className="list-group">
+            { this.props.lineItems && this.props.lineItems.map((item, index) =>
+              <li className="list-group-item d-flex flex-row align-items-center" key={index} onClick={(e) => this.toggleSelectLine(e, item)}>
+                <div className="check-box" >
+                  { !item.selected && 
+                    <i className="fas fa-square"></i>
+                  }
+                  { item.selected && 
+                    <i className="fas fa-check-square"></i>
+                  }
+                  </div>
+                  <div className="content-box">
+                      <div className="item-name">
+                          <label>Item Name: </label>
+                          <span>{item.uom}</span>
+                      </div>
+                      <div className="item-description">
+                          <label className="w-100"> 
+                              Description:
+                          </label>
+                          <span className="text-justify">
+                            {item.desc}
+                          </span>
+                      </div>
+                  </div>
+              </li>
+            )}
+          </ul>
+        </div>
       </div>
     )
   }

@@ -9,8 +9,8 @@ class UserComponent extends React.Component{
   }
   render(){
     return (
-      <div>
-        {this.state.customerName}
+      <div className="brand-title mx-4">
+        <h5>{this.state.customerName}</h5>
       </div>
     )
   }

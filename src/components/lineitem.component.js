@@ -4,12 +4,28 @@ import DetailComponent from './detail.component'
 import AddComponent from './add.component'
 
 class LineItemComponent extends React.Component{
+    toggleLineItemMode = (event, mode) =>{
+        event.stopPropagation();
+        this.props.toggleLineItemMode(mode);
+    }
     render(){
         return (
             <div>
-                <div>Detail - Line Items</div>
-                {this.props.lineItemMode === 'showDetail' && <button onClick={() => this.props.toggleLineItemMode('showAdd')}>Add</button>}
-                {this.props.lineItemMode === 'showAdd' && <button onClick={() => this.props.toggleLineItemMode('showDetail')}>Save</button>}
+                <div className="title-box">
+                    <label className="title ">DETAILS - LINE ITEM</label>
+                </div>
+                <div className="actions-box">
+                    {this.props.lineItemMode === 'showDetail' &&
+                        <button type="button" className="btn btn-sm icon-plus" onClick={(e) => this.toggleLineItemMode(e, 'showAdd')}>
+                            <i className="fas fa-plus"></i>
+                        </button>
+                    }
+                    {this.props.lineItemMode === 'showAdd' &&
+                        <button type="button" className="btn btn-sm icon-save" onClick={(e) => this.toggleLineItemMode(e, 'showDetail')}>
+                            <i className="fas fa-save"></i>
+                        </button>
+                    }
+                </div>
                 <div>
                     {this.props.lineItemMode === 'showDetail' &&
                         <DetailComponent 
